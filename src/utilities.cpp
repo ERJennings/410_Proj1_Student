@@ -34,6 +34,8 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 	string currentLine;
 	vector<string> currentData;
 
+	mainVector.clear();
+
 	if (dataFile.is_open()){
 		while (getline (dataFile, currentLine)) {
 
@@ -80,7 +82,7 @@ process_stats getNext() {
 
 //returns number of process_stats structs in the vector holding them
 int getNumbRows(){
-	return 0;
+	return mainVector.size();
 }
 
 
