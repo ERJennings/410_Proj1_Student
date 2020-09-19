@@ -71,7 +71,55 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
+	//Doing this using a bubble sort, learned this in CPSC 420 yesterday
+	//Maybe find a way to avoid all the if/else statements
 
+	process_stats valuePlaceholder;
+
+	if (mySortOrder == CPU_TIME) {
+		//for (int i = 0; i < mainVector.size() - 1; i++) {
+			//for (int j = 0; j < mainVector.size() - i - 1; j++) {
+				//if (mainVector[j].cpu_time > mainVector[j + 1].cpu_time) {
+					//swap(&mainVector[j], &mainVector[j + 1])
+				//}
+			//}
+		//}
+		for (int i = 0; i < mainVector.size(); i++) {
+			for (int j = i + 1; j < mainVector.size(); j++) {
+				if (mainVector[i].cpu_time > mainVector[j].cpu_time) {
+					swap(mainVector[i], mainVector[j]);
+				}
+			}
+		}
+	}
+	else if (mySortOrder == PROCESS_NUMBER) {
+		for (int i = 0; i < mainVector.size(); i++) {
+			for (int j = i + 1; j < mainVector.size(); j++) {
+				if (mainVector[i].process_number > mainVector[j].process_number) {
+					swap(mainVector[i], mainVector[j]);
+				}
+			}
+		}
+	}
+	else if (mySortOrder == START_TIME) {
+		for (int i = 0; i < mainVector.size(); i++) {
+			for (int j = i + 1; j < mainVector.size(); j++) {
+				if (mainVector[i].start_time > mainVector[j].start_time) {
+					swap(mainVector[i], mainVector[j]);
+				}
+			}
+		}
+	}
+	//IO_TIME, assuming there is no bad data being passed to the method
+	else {
+		for (int i = 0; i < mainVector.size(); i++) {
+			for (int j = i + 1; j < mainVector.size(); j++) {
+				if (mainVector[i].io_time > mainVector[j].io_time) {
+					swap(mainVector[i], mainVector[j]);
+				}
+			}
+		}
+	}
 }
 
 process_stats getNext() {
