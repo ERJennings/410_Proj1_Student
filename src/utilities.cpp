@@ -18,11 +18,43 @@ using namespace std;
 
 //if myString does not contain a string rep of number returns o
 //if int not large enough has undefined behaviour, very fragile
+
+//Vector suggested by utilities.h, maybe should be std::vector?
+vector <process_stats> mainVector;
+
 int stringToInt(const char *myString) {
 	return atoi(myString);
 }
 
 int loadData(const char* filename, bool ignoreFirstRow) {
+
+	ifstream dataFile;
+	dataFile.open(filename);
+
+	string currentLine;
+	vector<string> currentData;
+
+	while (getline (dataFile, currentLine)) {
+
+		string nextLine;
+		currentData.clear();
+		stringstream divide(currentLine);
+
+		//push next line of file into vector
+		while (getline (divide, nextLine)) {
+			currentData.push_back(nextLine);
+		}
+
+		process_stats statsToAdd;
+
+		statsToAdd.cpu_time = stoi(currentData[0]);
+		statsToAdd.process_number = stoi(currentData[1]);
+		statsToAdd.start_time = stoi(currentData[2]);
+		statsToAdd.io_time = stoi(currentData[3]);
+
+		mainVector.push_back(statsToAdd);
+
+	}
 
 	return SUCCESS;
 }
