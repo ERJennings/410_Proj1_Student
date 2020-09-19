@@ -125,6 +125,9 @@ void sortData(SORT_ORDER mySortOrder) {
 process_stats getNext() {
 	process_stats myFirst;
 
+	myFirst = mainVector[0];
+	mainVector.erase(mainVector.begin());
+
 	return myFirst;
 }
 
