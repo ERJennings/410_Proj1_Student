@@ -34,26 +34,33 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 	string currentLine;
 	vector<string> currentData;
 
-	while (getline (dataFile, currentLine)) {
+	if (dataFile.is_open()){
+		while (getline (dataFile, currentLine)) {
 
-		string nextLine;
-		currentData.clear();
-		stringstream divide(currentLine);
+			string nextLine;
+			currentData.clear();
+			stringstream divide(currentLine);
 
-		//push next line of file into vector
-		while (getline (divide, nextLine)) {
-			currentData.push_back(nextLine);
+			//push next line of file into vector
+			while (getline (divide, nextLine)) {
+				currentData.push_back(nextLine);
+			}
+
+			process_stats statsToAdd;
+
+			if (currentData.size() == 4) {
+				statsToAdd.cpu_time = stoi(currentData[0]);
+				statsToAdd.process_number = stoi(currentData[1]);
+				statsToAdd.start_time = stoi(currentData[2]);
+				statsToAdd.io_time = stoi(currentData[3]);
+
+				mainVector.push_back(statsToAdd);
+			}
+
 		}
-
-		process_stats statsToAdd;
-
-		statsToAdd.cpu_time = stoi(currentData[0]);
-		statsToAdd.process_number = stoi(currentData[1]);
-		statsToAdd.start_time = stoi(currentData[2]);
-		statsToAdd.io_time = stoi(currentData[3]);
-
-		mainVector.push_back(statsToAdd);
-
+	}
+	else {
+		return COULD_NOT_OPEN_FILE;
 	}
 
 	return SUCCESS;
