@@ -36,6 +36,8 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 	mainVector.clear();
 
+	bool stop = ignoreFirstRow;
+
 	if (dataFile.is_open()){
 		while (getline (dataFile, currentLine)) {
 
@@ -44,19 +46,29 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 			stringstream divide(currentLine);
 
 			//push next line of file into vector
-			while (getline (divide, nextLine)) {
+			while (getline (divide, nextLine, ',')) {
 				currentData.push_back(nextLine);
 			}
 
-			process_stats statsToAdd;
+			for (int i = 0; i < currentData.size(); i++) {
+				if (currentData[i].empty()) {
+					currentData.erase(currentData.begin() + i);
+				}
+			}
 
-			if (currentData.size() == 4) {
+			if (currentData.size() == 4 && stop == false && currentData[0] != "cpu_time") {
+
+				process_stats statsToAdd;
+
 				statsToAdd.cpu_time = stoi(currentData[0]);
 				statsToAdd.process_number = stoi(currentData[1]);
 				statsToAdd.start_time = stoi(currentData[2]);
 				statsToAdd.io_time = stoi(currentData[3]);
 
 				mainVector.push_back(statsToAdd);
+			}
+			else if (stop == true) {
+				stop = false;
 			}
 
 		}
