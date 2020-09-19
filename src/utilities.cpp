@@ -56,13 +56,13 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 				}
 			}
 
-			if (currentData.size() == 4 && stop == false && currentData[0] != "cpu_time") {
+			if (currentData.size() == 4 && stop == false && currentData[0] != "process_number") {
 
 				process_stats statsToAdd;
 
-				statsToAdd.cpu_time = stoi(currentData[0]);
-				statsToAdd.process_number = stoi(currentData[1]);
-				statsToAdd.start_time = stoi(currentData[2]);
+				statsToAdd.cpu_time = stoi(currentData[2]);
+				statsToAdd.process_number = stoi(currentData[0]);
+				statsToAdd.start_time = stoi(currentData[1]);
 				statsToAdd.io_time = stoi(currentData[3]);
 
 				mainVector.push_back(statsToAdd);
