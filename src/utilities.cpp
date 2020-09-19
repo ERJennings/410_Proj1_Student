@@ -56,7 +56,7 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 				}
 			}
 
-			if (currentData.size() == 4 && stop == false && currentData[0] != "process_number") {
+			if (currentData.size() == 4 && stop == false) {
 
 				process_stats statsToAdd;
 
@@ -67,12 +67,14 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 				mainVector.push_back(statsToAdd);
 			}
+
 			else if (stop == true) {
 				stop = false;
 			}
 
 		}
 	}
+
 	else {
 		return COULD_NOT_OPEN_FILE;
 	}
@@ -83,12 +85,15 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
+
 	//Doing this using a bubble sort, learned this in CPSC 420 yesterday
 	//Maybe find a way to avoid all the if/else statements
 
 	process_stats valuePlaceholder;
 
 	if (mySortOrder == CPU_TIME) {
+
+		//Did not work, trying again
 		//for (int i = 0; i < mainVector.size() - 1; i++) {
 			//for (int j = 0; j < mainVector.size() - i - 1; j++) {
 				//if (mainVector[j].cpu_time > mainVector[j + 1].cpu_time) {
@@ -96,6 +101,7 @@ void sortData(SORT_ORDER mySortOrder) {
 				//}
 			//}
 		//}
+
 		for (int i = 0; i < mainVector.size(); i++) {
 			for (int j = i + 1; j < mainVector.size(); j++) {
 				if (mainVector[i].cpu_time > mainVector[j].cpu_time) {
@@ -103,7 +109,9 @@ void sortData(SORT_ORDER mySortOrder) {
 				}
 			}
 		}
+
 	}
+
 	else if (mySortOrder == PROCESS_NUMBER) {
 		for (int i = 0; i < mainVector.size(); i++) {
 			for (int j = i + 1; j < mainVector.size(); j++) {
@@ -113,6 +121,7 @@ void sortData(SORT_ORDER mySortOrder) {
 			}
 		}
 	}
+
 	else if (mySortOrder == START_TIME) {
 		for (int i = 0; i < mainVector.size(); i++) {
 			for (int j = i + 1; j < mainVector.size(); j++) {
@@ -122,6 +131,7 @@ void sortData(SORT_ORDER mySortOrder) {
 			}
 		}
 	}
+
 	//IO_TIME, assuming there is no bad data being passed to the method
 	else {
 		for (int i = 0; i < mainVector.size(); i++) {
@@ -132,6 +142,7 @@ void sortData(SORT_ORDER mySortOrder) {
 			}
 		}
 	}
+
 }
 
 process_stats getNext() {
